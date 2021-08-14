@@ -35,7 +35,7 @@ class Conference
     private $isInternational;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="conference_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="conference", orphanRemoval=true)
      */
     private $comments;
 
@@ -97,7 +97,7 @@ class Conference
     {
         if (!$this->comments->contains($comment)) {
             $this->comments[] = $comment;
-            $comment->setConferenceId($this);
+            $comment->setConference($this);
         }
 
         return $this;
@@ -107,16 +107,11 @@ class Conference
     {
         if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($comment->getConferenceId() === $this) {
-                $comment->setConferenceId(null);
+            if ($comment->getConference() === $this) {
+                $comment->setConference(null);
             }
         }
 
         return $this;
-    }
-
-    public function __toString(): string
-    {
-        return $this->city.' '.$this->year;
     }
 }

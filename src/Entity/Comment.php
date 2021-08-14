@@ -46,7 +46,7 @@ class Comment
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $photoFileName;
+    private $photoFilename;
 
     public function getId(): ?int
     {
@@ -113,20 +113,15 @@ class Comment
         return $this;
     }
 
-    public function getPhotoFileName(): ?string
+    public function getPhotoFilename(): ?string
     {
-        return $this->photoFileName;
+        return $this->photoFilename;
     }
 
-    public function setPhotoFileName(?string $photoFileName): self
+    public function setPhotoFilename(?string $photoFilename): self
     {
-        $this->photoFileName = $photoFileName;
+        $this->photoFilename = $photoFilename;
 
         return $this;
-    }
-
-    public function __toString(): string
-    {
-        return (string) $this->getEmail();
     }
 }
