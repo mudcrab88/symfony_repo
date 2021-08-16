@@ -16,9 +16,18 @@ class ConferenceController extends AbstractController
 {
     private $twig;
 
-    public function __construct(Environment $twig)
+    private $commentRepository;
+
+    private $conferenceRepository;
+
+    public function __construct(
+        Environment $twig,
+        CommentRepository $commentRepository,
+        ConferenceRepository $conferenceRepository)
     {
         $this->twig = $twig;
+        $this->commentRepository = $commentRepository;
+        $this->conferenceRepository = $conferenceRepository;
     }
     /**
      * @Route("/", name="homepage")
@@ -40,10 +49,10 @@ class ConferenceController extends AbstractController
     }
 
     #[Route('/conference/{id}', name: 'conference')]
-    public function show(Request $request, Conference $conference, CommentRepository $commentRepository): Response
+    public function show(Request $request, Conference $conference): Response
     {
         $offset = max(0, $request->query->getInt('offset', 0));
-        $paginator = $commentRepository->getCommentPaginator($conference, $offset);
+        $paginator = $this->commentRepository->getCommentPaginator($conference, $offset);
 
         return new Response($this->twig->render('conference/show.html.twig', [
             'conference' => $conference,
