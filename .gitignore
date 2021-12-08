@@ -2,6 +2,8 @@
 node_modules
 vendor
 .env
+/docker/crt
+/docker/data
 ###> symfony/framework-bundle ###
 /.env
 /.env.local.php

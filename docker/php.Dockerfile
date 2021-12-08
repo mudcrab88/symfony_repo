@@ -14,7 +14,7 @@ RUN apt-get -qq update && apt-get -qq install -y \
     libicu-dev \
     nano \
     openssl \
-    sqlite \
+    sqlite3 \
     sudo \
     unzip \
     vim \
