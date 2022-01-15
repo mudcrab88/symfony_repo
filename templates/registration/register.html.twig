@@ -3,6 +3,7 @@
 {% block title %}Регистрация{% endblock %}
 
 {% block body %}
+<div class="form-center w-50 h-50">
     <h1>Регистрация</h1>
 
     {{ form_start(registrationForm) }}
@@ -14,4 +15,5 @@
 
         <button type="submit" class="btn">Зарегистрировать</button>
     {{ form_end(registrationForm) }}
+</div>
 {% endblock %}
