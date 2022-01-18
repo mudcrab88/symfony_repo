@@ -17,6 +17,21 @@
     </head>
     <body>
         <div class="content">
+            {% if show_menu == true %}
+            <div class="float-right">
+                {% if user == null %}
+                    <a class="login-href" href="/login">Вход</a>
+                    <a class="login-href" href="/register">Регистрация</a>
+                {% else %}
+                    <a class="login-href" href="/logout">Выход</a>
+                {% endif %}
+            </div>
+            <nav class="nav">
+                <a class="nav-link" href="/"> Главная страница </a>
+                <a class="nav-link" href="/users"> Пользователи </a>
+                <a class="nav-link" href="/info">Справочная информация </a>
+            </nav>
+            {% endif %}
             {% block body %}{% endblock %}
         </div>
     </body>
