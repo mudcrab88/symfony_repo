@@ -3,5 +3,20 @@
 {% block title %}Главная страница{% endblock %}
 
 {% block body %}
-
+<div class="w-100">
+    <div class="chat-window">111</div>
+    <div class="user-window">222</div>
+    <div class="send-window">
+        <div class="form-group send-message float-left">
+            <textarea class="form-control" id="send-text" rows="5">
+                Введите сообщение
+            </textarea>
+        </div>
+        <div class="send-button float-left">
+            <button class="btn btn-lg btn-success" type="submit">
+                Отправить
+            </button>
+        </div>
+    </div>
+</div>
 {% endblock %}
