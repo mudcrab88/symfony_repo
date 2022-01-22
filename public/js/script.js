@@ -1,9 +1,19 @@
 Vue.options.delimiters = [ '[[', ']]'];
 
-let app = new Vue({
+let textarea = new Vue({
     el: '#send-text',
         data: {
-            message: 'Введите сообщение'
+            message: null
         },
+    }
+);
+
+let sendbtn = new Vue({
+        el: '#send-button',
+        methods: {
+            send: function(event) {
+                alert(textarea.message);
+            }
+        }
     }
 );
