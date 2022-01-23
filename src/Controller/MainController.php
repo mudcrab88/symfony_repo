@@ -20,8 +20,12 @@ class MainController extends AbstractController
     }
 
     #[Route('/send', name: 'send')]
-    public function send()
+    public function send(): JsonResponse
     {
-        die(var_dump($this->getUser()));
+        $currentUser = $this->getUser();
+        $result = [];
+        $result['message'] = ($currentUser === null) ? "Вы не авторизованы" : "Привет, {$currentUser->getUserIdentifier()}!";
+
+        return  new JsonResponse($result);
     }
 }

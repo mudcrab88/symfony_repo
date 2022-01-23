@@ -12,7 +12,19 @@ let sendbtn = new Vue({
         el: '#send-button',
         methods: {
             send: function(event) {
-                alert(textarea.message);
+                let response = fetch('/send', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(textarea.message)
+                }).then((response) => {
+                        return response.json();
+                    }
+                ).then((json) => {
+                        console.log(json.message);
+                    }
+                );
             }
         }
     }
