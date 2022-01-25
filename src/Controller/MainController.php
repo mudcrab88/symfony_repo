@@ -6,10 +6,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use App\Repository\MessageRepository;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
+use App\Entity\Message;
 
 class MainController extends AbstractController
 {
+    private MessageRepository $msgRepository;
+    private ObjectManager $entityManager;
+
+    public function __construct(MessageRepository $msgRepository, ManagerRegistry $doctrine)
+    {
+        $this->msgRepository = $msgRepository;
+        $this->entityManager = $doctrine->getManager();
+    }
+
+
     #[Route('/', name: 'app')]
     public function index(): Response
     {
@@ -20,11 +34,19 @@ class MainController extends AbstractController
     }
 
     #[Route('/send', name: 'send')]
-    public function send(): JsonResponse
+    public function send(Request $request): JsonResponse
     {
         $currentUser = $this->getUser();
         $result = [];
-        $result['message'] = ($currentUser === null) ? "Вы не авторизованы" : "Привет, {$currentUser->getUserIdentifier()}!";
+
+        $message = new Message();
+        $message->setText($request->getContent());
+        $message->setUser($currentUser);
+        $message->setDatetime(new \DateTime());
+        $this->entityManager->persist($message);
+        $this->entityManager->flush();
+
+        $result['message'] = ($currentUser === null) ? "Вы не авторизованы" : "{$currentUser->getId()}, ваше сообщение {$request->getContent()}!";
 
         return  new JsonResponse($result);
     }
