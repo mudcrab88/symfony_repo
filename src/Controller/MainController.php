@@ -2,25 +2,20 @@
 
 namespace App\Controller;
 
+use App\Service\MessageService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\MessageRepository;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\Persistence\ObjectManager;
-use App\Entity\Message;
 
 class MainController extends AbstractController
 {
-    private MessageRepository $msgRepository;
-    private ObjectManager $entityManager;
+    private MessageService $service;
 
-    public function __construct(MessageRepository $msgRepository, ManagerRegistry $doctrine)
+    public function __construct(MessageService $service)
     {
-        $this->msgRepository = $msgRepository;
-        $this->entityManager = $doctrine->getManager();
+        $this->service = $service;
     }
 
 
@@ -39,14 +34,10 @@ class MainController extends AbstractController
         $currentUser = $this->getUser();
         $result = [];
 
-        $message = new Message();
-        $message->setText($request->getContent());
-        $message->setUser($currentUser);
-        $message->setDatetime(new \DateTime());
-        $this->entityManager->persist($message);
-        $this->entityManager->flush();
+        $message = $this->service->create($request->getContent(), $currentUser);
+        $this->service->save($message);
 
-        $result['message'] = ($currentUser === null) ? "Вы не авторизованы" : "{$currentUser->getId()}, ваше сообщение {$request->getContent()}!";
+        $result['message'] = ($currentUser === null) ? "Вы не авторизованы" : "Ваше сообщение {$message->getText()}!";
 
         return  new JsonResponse($result);
     }
