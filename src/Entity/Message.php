@@ -84,10 +84,20 @@ class Message
         return $this->datetime;
     }
 
+    public function getDatetimeFormatted(string $format = 'Y-m-d H:i:s'): ?string
+    {
+        return $this->getDatetime()->format($format);
+    }
+
     public function setDatetime(\DateTimeInterface $datetime): self
     {
         $this->datetime = $datetime;
 
         return $this;
+    }
+
+    public function getFullText(): string
+    {
+        return "{$this->getDatetimeFormatted()} {$this->getUser()->getUserIdentifier()}: {$this->getText()}";
     }
 }

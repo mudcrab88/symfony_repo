@@ -17,7 +17,7 @@ let sendbtn = new Vue({
                     headers: {
                         'Content-Type': 'application/json;charset=utf-8'
                     },
-                    body: JSON.stringify(textarea.message)
+                    body: JSON.stringify({message: textarea.message} )
                 }).then((response) => {
                         return response.json();
                     }
