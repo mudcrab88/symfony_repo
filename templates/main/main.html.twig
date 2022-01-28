@@ -4,7 +4,15 @@
 
 {% block body %}
 <div class="w-100">
-    <div class="chat-window">111</div>
+    <div class="chat-window">
+        <ul>
+        {% for value in messages %}
+            <li>
+                {{ value.datetime }} {{ value.username }} {{ value.text }}
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
     <div class="user-window">222</div>
     <div class="send-window">
         <div class="form-group send-message float-left">

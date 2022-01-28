@@ -35,4 +35,20 @@ class MessageService
         $this->entityManager->persist($message);
         $this->entityManager->flush();
     }
+
+    public function getMessagesAsArray(): array
+    {
+        $messages = $this->repository->findAll();
+        $result = [];
+        foreach ($messages as $message) {
+            $result[] = [
+                'id'       => $message->getId(),
+                'datetime' => $message->getDatetimeFormatted(),
+                'username' => $message->getUser()->getUserIdentifier(),
+                'text'     => $message->getText()
+            ];
+        }
+
+        return $result;
+    }
 }

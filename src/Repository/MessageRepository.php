@@ -47,4 +47,11 @@ class MessageRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findAllAsArray(): ?array
+    {
+        return $this->createQueryBuilder('m')
+            ->getQuery()
+            ->getArrayResult();
+    }
 }
