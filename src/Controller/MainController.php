@@ -37,7 +37,7 @@ class MainController extends AbstractController
         $currentUser = $this->getUser();
         $result = [];
 
-        $message = $this->service->create(json_decode($request->getContent()), $currentUser);
+        $message = $this->service->create($request->getContent(), $currentUser);
         $this->service->save($message);
 
         $result['message'] = ($currentUser === null) ? "Вы не авторизованы" : "Ваше сообщение {$message->getFullText()}!";

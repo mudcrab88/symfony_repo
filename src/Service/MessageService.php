@@ -23,6 +23,8 @@ class MessageService
     public function create(string $text, ?UserInterface $user): Message
     {
         $message = new Message();
+        $text = json_decode($text, true)['message'];
+
         $message->setText($text);
         $message->setUser($user);
         $message->setDatetime(new \DateTime());

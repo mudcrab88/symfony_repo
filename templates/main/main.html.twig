@@ -3,12 +3,22 @@
 {% block title %}Главная страница{% endblock %}
 
 {% block body %}
+{% if user != null %}
 <div class="w-100">
     <div class="chat-window">
-        <ul>
+        <ul class="ul-messages">
         {% for value in messages %}
             <li>
-                {{ value.datetime }} {{ value.username }} {{ value.text }}
+                <span class="messages-datetime">
+                    {{ value.datetime }}
+                </span>
+                <span class="messages-username">
+                    {{ value.username }} :
+                </span>
+                <span class="messages-text">
+                    {{ value.text }}
+                </span>
+
             </li>
         {% endfor %}
         </ul>
@@ -26,4 +36,5 @@
         </div>
     </div>
 </div>
+{% endif %}
 {% endblock %}
