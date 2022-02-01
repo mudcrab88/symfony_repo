@@ -18,7 +18,22 @@
                 <span class="messages-text">
                     {{ value.text }}
                 </span>
+                {% if user.email == value.username %}
+                    <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target=".bd-example-modal-sm"
+                            onclick='document.getElementById("change-modal").style.display = "block"'>
+                        Изменить
+                    </button>
+                    <!-- Модальное окно -->
+                    <div id="change-modal" class="modal">
 
+                        <!-- Модальное содержание -->
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <p>Некоторый текст в модальном..</p>
+                        </div>
+
+                    </div>
+                {% endif %}
             </li>
         {% endfor %}
         </ul>
