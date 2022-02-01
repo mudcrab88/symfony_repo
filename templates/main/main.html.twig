@@ -19,19 +19,23 @@
                     {{ value.text }}
                 </span>
                 {% if user.email == value.username %}
-                    <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target=".bd-example-modal-sm"
-                            onclick='document.getElementById("change-modal").style.display = "block"'>
+                    <button type="button" class="btn btn-link btn-sm" data-toggle="modal">
                         Изменить
                     </button>
                     <!-- Модальное окно -->
-                    <div id="change-modal" class="modal">
-
-                        <!-- Модальное содержание -->
-                        <div class="modal-content">
-                            <span class="close">&times;</span>
-                            <p>Некоторый текст в модальном..</p>
+                    <div id="change-modal" class="modal fade" role="dialog">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <span id="close-span" class="close">&times;</span>
+                                <h5>Изменить сообщение</h5>
+                            </div>
+                            <!-- Модальное содержание -->
+                            <div class="modal-content">
+                                <p>Некоторый текст в модальном..</p>
+                            </div>
+                            </div>
                         </div>
-
                     </div>
                 {% endif %}
             </li>

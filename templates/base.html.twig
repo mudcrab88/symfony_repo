@@ -13,8 +13,9 @@
 
         {% block javascripts %}
             {#{{ encore_entry_script_tags('app') }}#}
-            <script src="{{ asset('js/vue.js') }}"></script>
+            <script src="{{ asset('js/vue.js') }}" defer></script>
             <script src="{{ asset('js/script.js') }}" defer></script>
+            <script src="{{ asset('js/modal.js') }}" defer></script>
         {% endblock %}
     </head>
     <body>
