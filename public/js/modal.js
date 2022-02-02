@@ -1,7 +1,9 @@
     let changeBtns = document.querySelectorAll("button.btn-sm");
     let changeModal = document.getElementById("change-modal");
-    let changeSpan = document.getElementById("close-span");
-    console.log(changeModal);
+    let closeSpan = document.getElementById("close-span");
+    let closeBtn = document.getElementById("close-btn");
+
+    console.log(closeBtn);
 
     for (let i = 0; i < changeBtns.length; i++) {
         changeBtns[i].onclick = function() {
@@ -11,7 +13,7 @@
     }
 
 
-    changeSpan.onclick = function() {
+    closeBtn.onclick = closeSpan.onclick = function() {
         changeModal.style.display = "none";
         changeModal.style.opacity = 0;
     };
