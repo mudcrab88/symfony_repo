@@ -3,10 +3,10 @@
 namespace App\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
+use Symfony\Component\Security\Http\Event\LogoutEvent;
 use Doctrine\ORM\EntityManagerInterface;
 
-class LoginSuccessSubscriber implements EventSubscriberInterface
+class LogoutSubscriber implements EventSubscriberInterface
 {
     private EntityManagerInterface $em;
 
@@ -15,11 +15,11 @@ class LoginSuccessSubscriber implements EventSubscriberInterface
         $this->em = $em;
     }
 
-    public function onLoginSuccess(LoginSuccessEvent $event)
+    public function onLogout(LogoutEvent $event)
     {
-        $user = $event->getUser();
+        $user = $event->getToken()->getUser();
 
-        $user->setLoginTime(new \DateTime());
+        $user->setLogoutTime(new \DateTime());
         $this->em->persist($user);
         $this->em->flush();
     }
@@ -27,7 +27,7 @@ class LoginSuccessSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            LoginSuccessEvent::class => 'onLoginSuccess',
+            LogoutEvent::class => 'onLogout',
         ];
     }
 }

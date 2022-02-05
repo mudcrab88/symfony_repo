@@ -36,6 +36,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    public function findActiveUsersAsArray(): ?array
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.login_time > u.logout_time')
+            ->getQuery()
+            ->getArrayResult();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

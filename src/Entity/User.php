@@ -41,7 +41,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="datetime")
      */
-    private $datetime;
+    private $login_time;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $logout_time;
 
     public function getId(): ?int
     {
@@ -132,14 +137,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getDatetime(): ?\DateTimeInterface
+    public function getLoginTime(): ?\DateTimeInterface
     {
-        return $this->datetime;
+        return $this->login_time;
     }
 
-    public function setDatetime(\DateTimeInterface $datetime): self
+    public function setLoginTime(\DateTimeInterface $login_time): self
     {
-        $this->datetime = $datetime;
+        $this->login_time = $login_time;
+
+        return $this;
+    }
+
+    public function getLogoutTime(): ?\DateTimeInterface
+    {
+        return $this->logout_time;
+    }
+
+    public function setLogoutTime(\DateTimeInterface $logout_time): self
+    {
+        $this->logout_time = $logout_time;
 
         return $this;
     }
