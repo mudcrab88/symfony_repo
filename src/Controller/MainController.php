@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\MessageService;
+use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,23 +12,27 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MainController extends AbstractController
 {
-    private MessageService $service;
+    private MessageService $msgService;
+    private UserService $usrService;
 
-    public function __construct(MessageService $service)
+    public function __construct(MessageService $msgService, UserService $usrService)
     {
-        $this->service = $service;
+        $this->msgService = $msgService;
+        $this->usrService = $usrService;
     }
 
 
     #[Route('/', name: 'app')]
     public function index(): Response
     {
-        $messages = $this->service->getMessagesAsArray();
+        $messages = $this->msgService->getMessagesAsArray();
+        $activeUsers = $this->usrService->getActiveUsersArray();
 
         return $this->render('main/main.html.twig', [
-            'show_menu' => true,
-            'user'      => $this->getUser(),
-            'messages'  => $messages
+            'show_menu'   => true,
+            'user'        => $this->getUser(),
+            'messages'    => $messages,
+            'activeUsers' => $activeUsers
         ]);
     }
 
@@ -37,8 +42,8 @@ class MainController extends AbstractController
         $currentUser = $this->getUser();
         $result = [];
 
-        $message = $this->service->create($request->getContent(), $currentUser);
-        $this->service->save($message);
+        $message = $this->msgService->create($request->getContent(), $currentUser);
+        $this->msgService->save($message);
 
         $result['message'] = ($currentUser === null) ? "Вы не авторизованы" : "Ваше сообщение {$message->getFullText()}!";
 

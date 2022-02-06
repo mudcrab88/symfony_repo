@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -36,9 +37,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
-    public function findActiveUsersAsArray(): ?array
+    public function findActiveUsers(): ?array
     {
         return $this->createQueryBuilder('u')
+            ->select(['u.id', 'u.email'])
             ->where('u.login_time > u.logout_time')
             ->getQuery()
             ->getArrayResult();
