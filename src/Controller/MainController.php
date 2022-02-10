@@ -41,12 +41,27 @@ class MainController extends AbstractController
     {
         $currentUser = $this->getUser();
         $result = [];
+        $status = 200;
 
-        $message = $this->msgService->create($request->getContent(), $currentUser);
-        $this->msgService->save($message);
+        if ($currentUser === null) {
+            $result['message'] = "Вы не авторизованы";
+            $status = 401;
+        } else {
+            $message = $this->msgService->create($request->getContent(), $currentUser);
+            $this->msgService->save($message);
+            $result['message'] = "Ok";
+        }
 
-        $result['message'] = ($currentUser === null) ? "Вы не авторизованы" : "Ваше сообщение {$message->getFullText()}!";
+        return  new JsonResponse($result, $status);
+    }
 
-        return  new JsonResponse($result);
+    #[Route('/edit', name: 'send')]
+    public function edit(Request $request): JsonResponse
+    {
+        $currentUser = $this->getUser();
+        $result = [];
+        $status = 200;
+
+        return  new JsonResponse($result, $status);
     }
 }

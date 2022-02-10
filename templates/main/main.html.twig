@@ -7,18 +7,18 @@
 <div class="w-100">
     <div class="chat-window">
         <ul class="ul-messages">
-        {% for value in messages %}
-            <li>
+        {% for message in messages %}
+            <li data-msg_id="{{ message.id }}">
                 <span class="messages-datetime">
-                    {{ value.datetime }}
+                    {{ message.datetime }}
                 </span>
                 <span class="messages-username">
-                    {{ value.username }} :
+                    {{ message.username }} :
                 </span>
                 <span class="messages-text">
-                    {{ value.text }}
+                    {{ message.text }}
                 </span>
-                {% if user.email == value.username %}
+                {% if user.email == message.username %}
                     <button type="button" class="btn btn-link btn-sm" data-toggle="modal">
                         Изменить
                     </button>
