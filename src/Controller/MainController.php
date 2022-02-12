@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\DataTransferObject\MessageDTO;
 use App\Service\MessageService;
 use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,15 +48,17 @@ class MainController extends AbstractController
             $result['message'] = "Вы не авторизованы";
             $status = 401;
         } else {
+            $dto = MessageDTO::fromRequest($request);
+
             $message = $this->msgService->create($request->getContent(), $currentUser);
             $this->msgService->save($message);
-            $result['message'] = "Ok";
+            $result['message'] = $dto->text;
         }
 
         return  new JsonResponse($result, $status);
     }
 
-    #[Route('/edit', name: 'send')]
+    #[Route('/edit', name: 'edit')]
     public function edit(Request $request): JsonResponse
     {
         $currentUser = $this->getUser();

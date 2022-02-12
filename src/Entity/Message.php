@@ -15,28 +15,28 @@ class Message
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $text;
+    private ?string $text;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private ?User $user;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $status;
+    private ?int $status;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $datetime;
+    private ?\DateTimeInterface $datetime;
 
     public function getId(): ?int
     {
