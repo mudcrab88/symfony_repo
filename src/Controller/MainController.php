@@ -52,7 +52,7 @@ class MainController extends AbstractController
 
             $message = $this->msgService->create($request->getContent(), $currentUser);
             $this->msgService->save($message);
-            $result['message'] = $dto->text;
+            $result['message'] = json_encode($dto);
         }
 
         return  new JsonResponse($result, $status);

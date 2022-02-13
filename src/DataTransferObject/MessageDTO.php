@@ -12,7 +12,7 @@ class MessageDTO
 
     public ?string $text;
 
-    public ?User $user;
+    public ?int $user;
 
     public ?int $status;
 
@@ -20,17 +20,24 @@ class MessageDTO
 
     public static function fromRequest(Request $request): self
     {
-        $text = json_decode($request->getContent(), true)['message'];
+        $content = json_decode($request->getContent(), true);
 
-        return new self([
-            'text'     => $text,
-            'user'     => $request->getUser(),
-            'datetime' => new \DateTime()
-        ]);
+        $dto = new self();
+        $dto->text = $content['message'];
+        $dto->datetime = new \DateTime();
+
+        return $dto;
     }
 
     public static function fromEntity(Message $message): self
     {
+        $dto = new self();
 
+        $dto->id = $message->getId();
+        $dto->text = $message->getText();
+        $dto->datetime = $message->getDatetime();
+        $dto->user = $message->getUser()->getId();
+
+        return $dto;
     }
 }
